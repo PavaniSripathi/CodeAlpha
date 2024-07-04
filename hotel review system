@@ -1,0 +1,119 @@
+import java.util.ArrayList;
+import java.util.List;
+
+// Class to represent a review
+class Review {
+    private String reviewerName;
+    private String reviewText;
+    private int rating;
+
+    public Review(String reviewerName, String reviewText, int rating) {
+        this.reviewerName = reviewerName;
+        this.reviewText = reviewText;
+        this.rating = rating;
+    }
+
+    public String getReviewerName() {
+        return reviewerName;
+    }
+
+    public String getReviewText() {
+        return reviewText;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    @Override
+    public String toString() {
+        return "Reviewer: " + reviewerName + "\nRating: " + rating + "\nReview: " + reviewText + "\n";
+    }
+}
+
+// Class to represent a hotel
+class Hotel {
+    private String name;
+    private String address;
+    private List<Review> reviews;
+
+    public Hotel(String name, String address) {
+        this.name = name;
+        this.address = address;
+        this.reviews = new ArrayList<>();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void addReview(Review review) {
+        reviews.add(review);
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public double getAverageRating() {
+        if (reviews.isEmpty()) {
+            return 0;
+        }
+        int sum = 0;
+        for (Review review : reviews) {
+            sum += review.getRating();
+        }
+        return (double) sum / reviews.size();
+    }
+
+    @Override
+    public String toString() {
+        return "Hotel: " + name + "\nAddress: " + address + "\nAverage Rating: " + getAverageRating() + "\n";
+    }
+}
+
+// Class to manage the hotel review system
+public class HotelReviewSystem {
+    private List<Hotel> hotels;
+
+    public HotelReviewSystem() {
+        hotels = new ArrayList<>();
+    }
+
+    public void addHotel(Hotel hotel) {
+        hotels.add(hotel);
+    }
+
+    public List<Hotel> getHotels() {
+        return hotels;
+    }
+
+    public static void main(String[] args) {
+        HotelReviewSystem system = new HotelReviewSystem();
+
+        Hotel hotel1 = new Hotel("Sunrise Hotel", "123 Sunshine Blvd");
+        Hotel hotel2 = new Hotel("Oceanview Hotel", "456 Beach Ave");
+
+        Review review1 = new Review("Alice", "Great stay, very clean!", 5);
+        Review review2 = new Review("Bob", "Average experience.", 3);
+        Review review3 = new Review("Charlie", "Loved the location.", 4);
+
+        hotel1.addReview(review1);
+        hotel1.addReview(review2);
+        hotel2.addReview(review3);
+
+        system.addHotel(hotel1);
+        system.addHotel(hotel2);
+
+        for (Hotel hotel : system.getHotels()) {
+            System.out.println(hotel);
+            for (Review review : hotel.getReviews()) {
+                System.out.println(review);
+            }
+        }
+    }
+}
